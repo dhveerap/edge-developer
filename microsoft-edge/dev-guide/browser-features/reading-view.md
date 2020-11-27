@@ -1,102 +1,96 @@
 ---
 ms.assetid: 2bc29371-4f2e-4b59-a588-30b107d751f6
-description: See how Microsoft Edge provides a reading view for webpages to enable add-free reading.
-title: Reading view - Dev guide
+description: See how Microsoft Edge provides a Immersive Reader for webpages to enable add-free reading.
+title: Immersive Reader - Dev guide
 author: MSEdgeTeam
 ms.author: msedgedevrel
-ms.date: 07/28/2020
+ms.date: 11/27/2020
 ms.topic: article
 ms.prod: microsoft-edge
 keywords: edge, web development, html, css, javascript, developer
 ---
-# Reading view  
 
-[!INCLUDE [deprecation-note](../../includes/legacy-edge-note.md)]  
+# Immersive Reader
 
-Microsoft Edge provides a reading view for a more streamlined, book-like reading experience of webpages without the distraction of unrelated or other secondary content on the page.  Reading view can be toggled on or off from the **Reading view** \(book icon\) button on the address bar or with `Ctrl`+`Shift`+`R`.  Reading view extracts the following metadata from a page:  
+Microsoft Edge provides Immersive Reader for a more streamlined, book-like reading experience of webpages without the distraction of unrelated or other secondary content on the page. Immersive Reader can be toggled on or off from the **Immersive Reader** button on the address bar or with `F9`.
 
-*   Title
-*   Author
-*   Date
-*   Publisher
-*   Dominant image\(s\)
-*   Captions of dominant image\(s\)
-*   Secondary images
-*   Main text content of the page
-*   Copyright
+## Force Immersive Reader for a web page
 
-Users can then adjust the page contrast and font size from the Microsoft Edge **Settings** panel.  
-
-## Metadata extraction  
-
-Here are details of the page metadata rendered by reading view.  
-
-### Title  
-
-To ensure Reading view renders your article's title:  
-
-*   Include a `title` element in your header  
-*   Include a meta tag with `name="title"`  
-*   Match the title text in your article body with the content string of your meta tag.  Pipes \(`|`\) in your content string prevent the reader view from becoming active, try using hyphens \(`-`\) instead.  
-
-### Author  
-
-Reading View will look for an element with `class = "byline-name"`.  Best practice is to place the author name after the title and before the article body.  
+Currently Immersive Reader icon will only be shown on compatible pages, but if you want to force Immersive Reader bypassing our eligibility checks, you can use the following meta tag.
 
 ```html
-<div class="byline-name">Author name</div>
-```  
+<meta name="EDGE_READABLE_FRAME">
+```
 
-### Date  
+This is a preview feature and to use, you have to enable the flag `Immersive Reader for Edge Readable Elements` from **edge://flags**
 
-Reading view will render the publisher and date information together on the same line, with additional styling to highlight this information.  The article's publishing date will render exactly as it appears in the string.  Reading view does not convert to a specific date format.  
+This will show Immersive Reader icon in your web page even if the page is not compatible. The content extracted might not be as good as that of other compatible pages but we try to show the best possible content.
 
-If you have a date in your article body and would like Reading view to render it, assign the element containing the date with the class `'dateline'`:  
+## Enable Immersive Reader for specific content
 
-```html
-<div class="dateline"> Wednesday, September 18, 2013 7:38 AM </div>
-```  
-
-If you don't have a date in the article body but would like Reading view to render the date, use the meta tag `name='displaydate'`:  
+If you want to display curated content in Immersive Reader, you can use the **EDGE_READABLE_FRAME** meta tag and add **edgeReadable** attribute to the HTML Elements that needs to be shown in Immersive Reader:
 
 ```html
-<meta name="displaydate" content=" Wednesday, September 18, 2013 7:38 AM ">
-```  
+<html>
+    <head>
+        <title>Immersive Reader for specific nodes example</title>
+        <meta name="EDGE_READABLE_FRAME">
+    </head>
+    <body>
+        <div>
+            <p edgeReadable>I will appear in immersive reader</p>
+            <p>I will NOT appear in immersive reader</p>
+            <p edgeReadable>I will also appear in immersive reader</p>
+        </div>
+    </body>
+</html>
+```
+This is a preview feature and to use, you have to enable the flag `Immersive Reader for Edge Readable Elements` from **edge://flags**
 
-### Publisher  
+-   With this meta tag and attribute, you can choose the content that should be displayed on Immersive Reader, we bypass all the checks and only show the content marked as edgeReadable.
+-   If only EDGE_READABLE_FRAME meta tag is present without any HTML Elements having edgeReadable attribute we try to force Immersive Reader on entire page and if page is not compatible, the content displayed might not be as good as other compatible pages.
+-   Any node can be marked as edgeReadable except iframes.
 
-Reading view will look for the Open Graph protocol `"og:site_name"` to render the publisher information.  It also looks for `source_organization` and `publisher` attributes in any html tag as a secondary indicator of publisher information on the page.  The publisher text will be hyperlinked to the URL of page using the Reading view page hyperlink style.  
+## Enable Immersive Reader for specific iframe
 
-```html
-<meta content="Name of organization source" property="og:site_name">
-```  
-
-### Images  
-
-Reading view captures most raw images with width >= 400px and aspect ratio >= 1/3 and =< 3.0.  Images that do not meet these dimensions may still be extracted, such as images that are smaller than 400px in width but have captions.  The first eligible image becomes the dominant image of the article.  The dominant image is rendered as the first piece of content and given full column width.  All following images are rendered as inline images within the article.  
-
-### Captions  
-
-Best practice is to place images in [figure](https://developer.mozilla.org/docs/Web/HTML/Element/figure) tags with no more than two nested [figcaption](https://developer.mozilla.org/docs/Web/HTML/Element/figcaption) tags.  
-
-### Body  
-
-To ensure that all the body text of your page is captured by Reading view, it helps to keep most of the article text the same font size and DOM depth.  The reading view algorithm allows for some deviation from this rule so publishers can have the freedom to add emphasis to lines or words.  
-
-### Copyright  
-
-Reading view extracts and displays copyright information denoted by meta tags with `name = "copyright"`, or if no meta tag information exists, a text node that contains the copyright \(`©`\) symbol.  Reading view displays copyright information at the end of the article main body, styled using a smaller font size than the main body text.  
+If you want to display content from an iframe in Immersive Reader instead of main page, you can use the **EDGE_READABLE_FRAME** meta tag and add **content** attribute to the meta tag with value of **iframe name** that specifies which iframe content should be shown in Immersive Reader.
 
 ```html
-<meta name="copyright" content="Your copyright information">
-```  
+<html>
+    <head>
+        <title>Iframe Reading View</title>
+        <meta name="EDGE_READABLE_FRAME" content="irFrame">
+    </head>
+    <body>
+        <h1>Immersive Reader for iframe example</h1>
+        <iframe
+            id="testFrameId"
+            src="/reading/test.html"
+            name="testFrame"
+        >
+        </iframe>
+        <iframe
+            id="irFrameId"
+            src="/reading/this_is_visible_in_ImmersiveReader.html"
+            name="irFrame"
+        >
+        </iframe>
+    </body>
+</html>
+```
 
-## Opting out of Reading View  
+This is a preview feature and to use, you have to enable the flag `Immersive Reader for Readable Frame` from **edge://flags**
 
-If you feel your content is not a good fit for Reading view, you can use the following meta tag to opt out of this feature:  
+-   With this meta tag and iframe name in content attribute, you can choose which iframe we should consider while extracting content.
+-   You can even specify edgeReadable attribute to HTML Elements in the mentioned iframe, then only edgeReadable elements in that iframe are shown in Immersive Reader.
+-   If only EDGE_READABLE_FRAME meta tag is present without specifying which iframe to consider, we try to force Immersive Reader on entire page and if page is not compatible, the content displayed might not be as good as other compatible pages.
+
+## Opting out of Immersive Reader
+
+If you feel your content is not a good fit for Immersive Reader, you can use the following meta tag to opt out of this feature:
 
 ```html
 <meta name="IE_RM_OFF" content="true">
-```  
+```
 
-With this tag, the **Reading view** button will not appear in the address bar when your users view your page.  
+With this tag, the **Immersive Reader** button will not appear in the address bar when your users view your page.
