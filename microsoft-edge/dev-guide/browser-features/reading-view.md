@@ -22,7 +22,7 @@ Currently Immersive Reader icon will only be shown on compatible pages, but if y
 <meta name="EDGE_READABLE_FRAME">
 ```
 
-This is a preview feature and to use, you have to enable the flag `Immersive Reader for Readable Frame` from **edge://flags**
+This is a preview feature and to use, you have to enable the flag `Immersive Reader for Readable Frame` from [edge://flags](edge://flags/)
 
 This will show Immersive Reader icon in your web page even if the page is not compatible. The content extracted might not be as good as that of other compatible pages but we try to show the best possible content.
 
@@ -45,7 +45,7 @@ If you want to display curated content in Immersive Reader, you can use the **ED
     </body>
 </html>
 ```
-This is a preview feature and to use, you have to enable the flag `Immersive Reader for Edge Readable Elements` from **edge://flags**
+This is a preview feature and to use, you have to enable the flag `Immersive Reader for Edge Readable Elements` from [edge://flags](edge://flags/)
 
 -   With this meta tag and attribute, you can choose the content that should be displayed on Immersive Reader, we bypass all the checks and only show the content marked as edgeReadable.
 -   If only EDGE_READABLE_FRAME meta tag is present without any HTML Elements having edgeReadable attribute we try to force Immersive Reader on entire page and if page is not compatible, the content displayed might not be as good as other compatible pages.
@@ -79,7 +79,7 @@ If you want to display content from an iframe in Immersive Reader instead of mai
 </html>
 ```
 
-This is a preview feature and to use, you have to enable the flag `Immersive Reader for Readable Frame` from **edge://flags**
+This is a preview feature and to use, you have to enable the flag `Immersive Reader for Readable Frame` from [edge://flags](edge://flags/)
 
 -   With this meta tag and iframe name in content attribute, you can choose which iframe we should consider while extracting content.
 -   You can even specify edgeReadable attribute to HTML Elements in the mentioned iframe, then only edgeReadable elements in that iframe are shown in Immersive Reader.
