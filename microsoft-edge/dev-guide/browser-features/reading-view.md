@@ -12,7 +12,10 @@ keywords: edge, web development, html, css, javascript, developer
 
 # Immersive Reader
 
-Microsoft Edge provides Immersive Reader for a more streamlined, book-like reading experience of webpages without the distraction of unrelated or other secondary content on the page. Immersive Reader can be toggled on or off from the **Immersive Reader** button on the address bar or with `F9`.
+Immersive reader in Microsoft Edge simplifies the layout a webpage, removes clutter and allows users to make customization in their reading experience. 
+
+## Enter reading mode using Immersive Reader
+To enter reading mode, navigate to the website that you want to read in Microsoft Edge and select Enter Immersive Reader button (Icon) from the address bar or use the keyboard shortcut F9.
 
 ## Force Immersive Reader for a web page
 
@@ -24,11 +27,11 @@ Currently Immersive Reader icon will only be shown on compatible pages, but if y
 
 This is a preview feature and to use, navigate to **edge://flags** and enable the flag `Immersive Reader for Readable Frame`
 
-This will show Immersive Reader icon in your web page even if the page is not compatible. The content extracted might not be as good as that of other compatible pages but we try to show the best possible content.
+This will show Immersive Reader icon in your web page even if the page is not compatible. The content extracted might not be as good as that of other compatible pages but Immersive Reader will show the best possible content.
 
 ## Enable Immersive Reader for specific content
 
-If you want to display curated content in Immersive Reader, you can use the **EDGE_READABLE_FRAME** meta tag and add **edgeReadable** attribute to the HTML Elements that needs to be shown in Immersive Reader:
+Along with making the page eligible for reading mode via Immersive Reader, if you also want to specifiy what parts of the web page should be displayed in Immersive Reader, you can use the **EDGE_READABLE_FRAME** meta tag and add **edgeReadable** attribute to the HTML Elements that needs to be shown in Immersive Reader:
 
 ```html
 <html>
@@ -47,13 +50,12 @@ If you want to display curated content in Immersive Reader, you can use the **ED
 ```
 This is a preview feature and to use, navigate to **edge://flags** and enable the flag `Immersive Reader for Edge Readable Elements`
 
--   With this meta tag and attribute, you can choose the content that should be displayed on Immersive Reader, we bypass all the checks and only show the content marked as edgeReadable.
--   If only EDGE_READABLE_FRAME meta tag is present without any HTML Elements having edgeReadable attribute we try to force Immersive Reader on entire page and if page is not compatible, the content displayed might not be as good as other compatible pages.
+-   If only EDGE_READABLE_FRAME meta tag is present without any HTML Elements having edgeReadable attribute, Immersive Reader will be forced on entire page and if page is not compatible, the content extracted might not be as good as that of other compatible pages.
 -   Any HTML Element can be marked as edgeReadable except iframe.
 
 ## Enable Immersive Reader for specific iframe
 
-If you want to display content from an iframe in Immersive Reader instead of main page, you can use the **EDGE_READABLE_FRAME** meta tag and add **content** attribute to the meta tag with value of **iframe name** that specifies which iframe content should be shown in Immersive Reader.
+If you want to display content from an iframe in Immersive Reader instead of main page, you can use the **EDGE_READABLE_FRAME** meta tag and add **content** attribute to the meta tag, the attribute value should be the name of **iframe** whose content should be shown in Immersive Reader.
 
 ```html
 <html>
@@ -81,9 +83,8 @@ If you want to display content from an iframe in Immersive Reader instead of mai
 
 This is a preview feature and to use, navigate to **edge://flags** and enable the flag `Immersive Reader for Readable Frame`
 
--   With this meta tag and iframe name in content attribute, you can choose which iframe we should consider while extracting content.
 -   You can even specify edgeReadable attribute to HTML Elements in the mentioned iframe, then only edgeReadable elements in that iframe are shown in Immersive Reader.
--   If only EDGE_READABLE_FRAME meta tag is present without specifying which iframe to consider, we try to force Immersive Reader on entire page and if page is not compatible, the content displayed might not be as good as other compatible pages.
+-   If only EDGE_READABLE_FRAME meta tag is present without specifying which iframe to consider, Immersive Reader will be forced on main page and if page is not compatible, the content extracted might not be as good as that of other compatible pages.
 
 ## Opting out of Immersive Reader
 
